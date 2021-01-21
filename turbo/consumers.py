@@ -12,7 +12,6 @@ signer = Signer()
 class TurboStreamException(Exception):
     pass
 
-
 class TurboStreamsConsumer(JsonWebsocketConsumer):
     def connect(self):
         self.accept()
@@ -35,24 +34,12 @@ class TurboStreamsConsumer(JsonWebsocketConsumer):
         self,
         event,
     ):
-        extra_context = event["context"]
-        action = event["action"]
-        dom_target = event["dom_target"]
-        template_context = {
-            "action": action,
-            "dom_target": dom_target,
-        }
-        # Remove actions don't have contents, so only add context for model
-        # template if it's not a remove action.
-        if action != REMOVE:
-            template_context.update({"model_template": event.get("template")})
-            template_context.update(extra_context)
-
         signed_channel_name = signer.sign(event["channel_name"])
+        print(event["html"])
         self.send_json(
             {
                 "signed_channel_name": signed_channel_name,
-                "data": render_to_string("turbo/stream.html", template_context),
+                "data": event["html"][0]
             }
         )
 
