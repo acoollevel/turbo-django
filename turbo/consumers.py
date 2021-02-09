@@ -35,7 +35,6 @@ class TurboStreamsConsumer(JsonWebsocketConsumer):
         event,
     ):
         signed_channel_name = signer.sign(event["channel_name"])
-        print(event["html"])
         self.send_json(
             {
                 "signed_channel_name": signed_channel_name,
