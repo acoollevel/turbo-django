@@ -31,6 +31,7 @@ APPEND = "append"
 PREPEND = "prepend"
 REPLACE = "replace"
 REMOVE = "remove"
+UPDATE = "update"
 
 def broadcast_stream(
     stream_target,
